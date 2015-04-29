@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Ubercodes</title>
+  <meta name="description" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="assets/css/normalize.css">
+  <link rel="stylesheet" href="assets/css/skeleton.css">
+
+  <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <!--link rel="icon" type="image/png" href="images/favicon.png"-->
+  <style>
+  body {
+    color: #444;
+    margin-top: 20px;
+    background-color: #F9FAFA
+  }
+  header {
+    text-align: center;
+    margin-top: 25%;
+  }
+  a {
+    text-decoration: none
+  }
+  .date {
+    color: #888
+  }
+  .feed {
+    list-style: none;
+  }
+  .feed li {
+    clear: both;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #fff;
+    margin: 0;
+  }
+  .feed li:first-child {
+    border-top: 0;
+  }
+  .feed p {
+    padding: 5px;
+    margin: 0;
+  }
+  .avi img {
+    margin-top: 10px;
+    display: block;
+    float: right;
+    width: 48px;
+    border-radius: 50%;
+  }
+  a.date {
+    color: #777;
+    text-decoration: none
+  }
+  a.date:hover {
+    text-decoration: underline
+  }
+  h5 {
+    margin-bottom: 0;
+  }
+  </style>
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <div class="row">
+      <div class="eight columns">
+        <ul class="feed">
+        </ul>
+      </div>
+        <header class="four columns">
+          <h1>Ubercodes</h1>
+          <h5>Uber promo codes sourced from Twitter</h5>
+        </header>
+    </div>
+  </div>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script>
+    var tweetEl;
+    var socket = io('http://localhost:3000');
+    socket.on('tweet', function (tweet, text) {
+        tweetEl = $('<li class="row">\
+            <div class="avi two columns"><img src="'+tweet.user.profile_image_url+'"></div>\
+            <div class="tweet ten columns">\
+              <h5><a href="http://twitter.com/'+tweet.user.screen_name+'" \
+              rel="nofollow">@'+tweet.user.screen_name+'</a></h5>\
+              <p>'+text+'</p>\
+            <p><a href="http://twitter.com/'+tweet.user.screen_name+'/status/'+tweet.id_str+'"\
+             rel="nofollow" class="date">'+tweet.created_at+'</a></p></div>\
+          </li>');
+        tweetEl.hide();
+        $('.feed').prepend(tweetEl);
+        tweetEl.fadeIn();
+    });
+  </script>
+</body>
+</html>
